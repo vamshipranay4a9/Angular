@@ -1,0 +1,62 @@
+<html>
+    <head>
+         <title>Angular Search Multiple</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body ng-app="Multiple">
+        <div ng-controller="myctrl">
+            <input type="text" ng-model="searchText.name" placeholder="search name"/>
+            <input type="text" ng-model="searchText.city" placeholder="search city"/>
+            <input type="checkbox" ng-model="exactMatch"/>Exact Match
+            <br/><br/>
+            <input type="text" ng-model="searchText" placeholder='search name and city'/>
+            <br/><br/>
+            <table border=2>                
+                <tr>
+                        <th>Names</th>
+                        <th>D.O.B</th>
+                        <th>Gender</th>
+                        <th>Salary</th>
+                        <th>City</th>
+                    </tr>
+                    <tr ng-repeat="employee in employees |filter:searchText:exactMatch">
+
+                        <td>{{employee.name | uppercase}}</td>
+                        <td>{{employee.dateofbirth | date:"dd/MM/yyyy"}}</td>
+                        <td>{{employee.gender| lowercase}}</td>
+                        <td>{{employee.salary | number:2}}</td>
+                        <td>{{employee.city}}</td>
+
+                    </tr>
+            </table>
+        </div>
+        <script>
+            angular.module("Multiple",[])
+            .controller("myctrl",function($scope){
+                $scope.employees=[
+                    {name:"Ben", dateofbirth: new Date("November 23 1988"), gender:"Male",salary:55000.788, city:"Dallas"},
+                    {name:"Lisa", dateofbirth: new Date("March 10 1990"), gender:"Female",salary:75000, city:"Denver"},
+                    {name:"Stuart", dateofbirth: new Date("july 15 1975"), gender:"Male",salary:68000,city:"Denver"},
+                    {name:"Zack", dateofbirth: new Date("August 3 1985"), gender:"Male",salary:53000, city:"Dallas"},
+                    {name:"Moira", dateofbirth: new Date("October 9 1991"), gender:"Female",salary:60000,city:"Fremont"}
+                ];
+                $scope.search=function(item){
+                    
+                    if($scope.searchText == undefined){
+                        return true;
+                    }
+                    else{
+                        if(item.name.toLowerCase().indexOf($scope.searchText.toLowerCase())!=-1||
+                          item.city.toLowerCase().indexOf($scope.searchText.toLowerCase())!=-1)
+                            {
+                                return true;
+                            }
+                    }
+                    
+                        return false;
+                }
+            })
+        </script>
+    </body>
+</html>

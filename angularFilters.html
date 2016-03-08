@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Angular Filters</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+</head>
+<body ng-app="Filters">
+    <div ng-controller="mycontroller">
+        <button ng-click="hidevalue(employee);">click</button>
+            <label>Hidevalue<input type="checkbox" ng-model="hidevalue"></label>
+            <label>Rows to display:<input type="number" step="1" min="0" max="5" ng-model="rowlimit"/></label>
+       
+                <table border=2>
+                    <tr>
+                        <th>Names</th>
+                        <th>D.O.B</th>
+                        <th>Gender</th>
+                        <th ng-hide="hidvalue">Salary (numbers)</th>
+                        <th>Salary (currency)</th>
+                    </tr>
+                    <tr ng-repeat="employee in employees| limitTo:rowlimit">
+
+                        <td>{{employee.name | uppercase}}</td>
+                        <td>{{employee.dateofbirth | date:"dd/MM/yyyy"}}</td>
+                        <td>{{employee.gender| lowercase}}</td>
+                        <td ng-hide="hidevalue">{{employee.salary | number:2}}</td>
+                        <td>{{employee.salary | currency}}</td>
+
+                    </tr>
+                </table>
+       
+    <script>
+        angular.module("Filters",[])
+        .controller("mycontroller",function($scope){
+          var employees=[
+                {name:"Ben", dateofbirth: new Date("November 23 1988"), gender:"Male",salary:55000.788},
+                    {name:"Stuart", dateofbirth: new Date("july 15 1975"), gender:"Male",salary:68000},
+                    {name:"Zack", dateofbirth: new Date("August 3 1985"), gender:"Male",salary:53000},
+                    {name:"Lisa", dateofbirth: new Date("March 10 1990"), gender:"Female",salary:75000},
+                    {name:"Moira", dateofbirth: new Date("October 9 1991"), gender:"Female",salary:60000}
+            ];
+            $scope.employees=employees;
+            $scope.rowlimit=3;
+             
+        $scope.hidevalue=function(employee){
+                employee.salary= hide;
+            console.log(employee.salary)
+            }
+           
+        });
+        
+        
+</script>
+</body>
+</html>

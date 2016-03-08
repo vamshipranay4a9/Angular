@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Angular Custom</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body ng-app="Custom">
+        <div ng-controller="myctrl">
+           <table border=2>                
+                <tr>
+                        <th>Names</th>
+                        <th>Gender</th>
+                        <th>Salary</th>
+                        <th>City</th>
+                    </tr>
+                    <tr ng-repeat="employee in employees">
+
+                        <td>{{employee.name}}</td>
+                        <td>{{employee.gender|gender}}</td>
+                        <td>{{employee.salary}}</td>
+                        <td>{{employee.city}}</td>
+
+                    </tr>
+            </table>
+        </div>
+        <script>
+            angular.module("Custom",[])
+            .filter("gender",function(){
+                return function(gender){
+                    switch(gender){
+                        case 1:
+                            return "Male";
+                        case 2:
+                            return "Female";
+                        case 3:
+                            return "Not Disclosed";
+                            
+                    }
+                }
+            })
+            .controller("myctrl",function($scope){
+                $scope.employees=[
+                    {name:"Ben",  gender:1,salary:55000.788, city:"Dallas"},
+                    {name:"Lisa", gender:2,salary:75000, city:"Denver"},
+                    {name:"Stuart", gender:1,salary:68000,city:"Denver"},
+                    {name:"Moira",  gender:2,salary:60000,city:"Fremont"},
+                    {name:"Zack", gender:3,salary:53000, city:"Dallas"}
+                ]
+            });
+        
+        </script>
+    </body>
+</html>

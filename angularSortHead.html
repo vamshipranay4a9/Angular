@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Angular Sorting</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body ng-app="sortHead">
+        <div ng-controller="myctrl">
+            <table>                
+                <tr>
+                        <th ng-click="sortData('name')">
+                            Names<div ng-class="getSortClass('name')"></div></th>
+                        <th ng-click="sortData('dateofbirth')">
+                            D.O.B <div ng-class="getSortClass('dateofbirth')"></div></th>
+                        <th ng-click="sortData('gender')">
+                            Gender<div ng-class="getSortClass('gender')"></div></th>
+                        <th ng-click="sortData('salary')">
+                            Salary (numbers)<div ng-class="getSortClass('salary')"></div></th>
+                        <th ng-click="sortData('salary')">
+                            Salary (currency)<div ng-class="getSortClass('salary')"></div></th>
+                    </tr>
+                    <tr ng-repeat="employee in employees |orderBy:sortColumn:reverseSort">
+
+                        <td>{{employee.name | uppercase}}</td>
+                        <td>{{employee.dateofbirth | date:"dd/MM/yyyy"}}</td>
+                        <td>{{employee.gender| lowercase}}</td>
+                        <td>{{employee.salary | number:2}}</td>
+                        <td>{{employee.salary | currency}}</td>
+
+                    </tr>
+            </table>
+        </div>
+        <script>
+            angular.module("sortHead",[])
+            .controller("myctrl",function($scope){
+                $scope.employees=[
+                    {name:"Ben", dateofbirth: new Date("November 23 1988"), gender:"Male",salary:55000.788},
+                    {name:"Lisa", dateofbirth: new Date("March 10 1990"), gender:"Female",salary:75000},
+                    {name:"Stuart", dateofbirth: new Date("july 15 1975"), gender:"Male",salary:68000},
+                    {name:"Zack", dateofbirth: new Date("August 3 1985"), gender:"Male",salary:53000},
+                    {name:"Moira", dateofbirth: new Date("October 9 1991"), gender:"Female",salary:60000}
+                ];
+                $scope.sortColumn="name";
+                $scope.reverseSort=false;
+                
+                $scope.sortData=function(column){
+                    $scope.reverseSort=($scope.sortColumn==column)? !$scope.reverseSort:false;
+                    $scope.sortColumn=column;
+                }
+                
+                $scope.getSortClass=function(column){
+                    if($scope.sortColumn==column){
+                        return $scope.reverseSort?  "arrow-down":"arrow-up" ;
+                }
+                    return '';
+                }
+            });
+        </script>
+    </body>
+</html>

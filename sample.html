@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    </head>
+    <body ng-app="Sample">
+        <div>
+            <div ng-controller="myctrl">
+                    Hello {{name}}!
+            </div>
+            <div ng-controller="newctrl">
+             <table border=2>
+                    <tr>
+                        
+                        <th>Jobs</th>
+                        <th>Roles</th>
+                    </tr>
+                    <tr>
+
+                        <td>{{job}}</td>
+                        <td>{{technology}}</td>
+
+                    </tr>
+                </table>
+          </div>
+
+        <script>
+            angular.module("Sample",[])
+            .controller("myctrl",function($scope,$rootScope){
+                $scope.name="vamshi"
+                $rootScope.technology="UI Developer"
+            })
+            .controller("newctrl",['$scope','$rootScope',function($scope,$rootScope){
+                $scope.jobs=$rootScope.technology;               
+            }]);
+        </script>
+    </body>
+</html>

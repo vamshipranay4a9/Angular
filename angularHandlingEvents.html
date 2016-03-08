@@ -1,0 +1,58 @@
+<html>
+<head>
+    
+    <title>Angular Handling Events</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <style>
+        input{cursor:pointer;}
+    </style>
+    
+</head>
+<body ng-app="Events">
+    
+    <div ng-controller="myctrl">
+        
+        <table border=2 >
+            <thead>
+                <tr padding=50px>
+                    <th>Names</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                    <th>Buttons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="technology in technologies">
+                    <td>{{technology.name}}</td>
+                    <td>{{technology.likes}}</td>
+                    <td>{{technology.dislikes}}</td>
+                    <td>
+                        <input type="button" value="likes" ng-click="incrementLikes(technology)">
+                        <input type="button" value="dislikes" ng-click="incrementDislikes(technology)">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+    </div>
+    
+    <script>
+        angular.module("Events",[])
+        .controller("myctrl",function($scope){
+            $scope.technologies=[
+                {name:"Java",likes:0,dislikes:0},
+                {name:".Net",likes:0,dislikes:0},
+                {name:"Angular",likes:0,dislikes:0},
+                {name:"iOS",likes:0,dislikes:0},
+            ];
+            $scope.incrementLikes=function(technology){
+                technology.likes++;
+            };
+            $scope.incrementDislikes=function(technology){
+                technology.dislikes++;
+            };
+        })
+    </script>
+    
+</body>
+</html>

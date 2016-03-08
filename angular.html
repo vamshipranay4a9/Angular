@@ -1,0 +1,134 @@
+<html ng-app='angular'>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<style>
+    
+</style>
+<body>
+    <div ng-controller="mycontroller">
+        
+        <p><b>{{country.name}}</b></p>
+        {{country.location}}
+        {{country.age}}
+        <img ng-src="{{ country.image }}" height="100" width="100   "></img>
+    </div>
+    <div ng-controller="controller">
+        
+      <table border=2>
+        <tr>
+          <th>FirstName</th>
+            <th>Last Name</th>
+          </tr>
+          <tr ng-repeat="user in users">
+              <td>{{user.fname}}</td>
+              <td>{{user.lname}}</td>  
+          
+          </tr>
+        
+        </table>
+        
+    </div>
+    
+    <div ng-controller="myctrl">
+        <table border=2>
+        <tr>
+            <th>Names</th>
+            <th>Likes</th>
+            <th>Dislikes</th>
+            <th>Likes/Dislikes</th>
+        </tr>
+        <tr ng-repeat="technology in technologies">
+        
+            <td>{{technology.Name}}</td>
+            <td>{{technology.Likes}}</td>
+            <td>{{technology.Dislikes}}</td>
+            <td>
+                <input type="button" value="Likes" ng-click="incrementLikes(technology)">
+                <input type="button" value="Dislikes" ng-click="incrementDislikes(technology)">
+            </td>
+        </tr>
+        </table>
+    </div>
+     <div ng-controller="newctrl">
+       Rows to display:   <input type="number" step="1" min="0" max="5" ng-model="rowlimit"/>
+        <table border=2>
+        <tr>
+            <th>Names</th>
+            <th>D.O.B</th>
+            <th>Gender</th>
+            <th>Salary (numbers)</th>
+            <th>Salary (currency)</th>
+        </tr>
+        <tr ng-repeat="employee in employees| limitTo:rowlimit">
+        
+            <td>{{employee.name | uppercase}}</td>
+            <td>{{employee.dateofbirth | date:"dd/MM/yyyy"}}</td>
+            <td>{{employee.gender| lowercase}}</td>
+            <td>{{employee.salary | number:2}}</td>
+            <td>{{employee.salary | currency}}</td>
+            
+        </tr>
+        </table>
+    </div>
+    
+    <script>
+        angular.module("angular",[])
+        .controller("mycontroller",function($scope){
+            var country={
+            name:'mythri',
+            location:'Frisco',
+            age:24,
+            image:"IMG_0799.jpg"
+            };
+            $scope.country=country;
+        })
+        
+        .controller("controller",function($scope){
+            $scope.users=[
+                
+                {
+                    fname:"vamshi",
+                    lname:"K",
+                },
+                
+                {
+                    fname:"pranay",
+                    lname:"K",
+                }
+            ];
+            })
+            
+        .controller("myctrl",function($scope){
+                    
+                $scope.technologies=[
+                    {Name:"C#",Likes:0,Dislikes:0},
+                    {Name:"Java",Likes:0,Dislikes:0},
+                    {Name:".Net",Likes:0,Dislikes:0},
+                    {Name:"AngularJS",Likes:0,Dislikes:0},
+                    ],
+                $scope.incrementLikes=function(technology){
+                    technology.Likes++;
+                    }
+                $scope.incrementDislikes=function(technology){
+                    technology.Dislikes++;
+                    }
+                })
+        
+        .controller("newctrl",function($scope){
+                $scope.employees=[
+                    {name:"Ben", dateofbirth: new Date("November 23 1988"), gender:"Male",salary:55000.788},
+                    {name:"Stuart", dateofbirth: new Date("july 15 1975"), gender:"Male",salary:68000},
+                    {name:"Zack", dateofbirth: new Date("August 3 1985"), gender:"Male",salary:53000},
+                    {name:"Lisa", dateofbirth: new Date("March 10 1990"), gender:"Female",salary:75000},
+                    {name:"Moira", dateofbirth: new Date("October 9 1991"), gender:"Female",salary:60000},
+                ];
+                $scope.rowlimit=3;
+        });
+    
+        
+    </script>
+    
+</body>
+</html>

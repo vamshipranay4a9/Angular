@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Angular Sorting</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    </head>
+    <body ng-app="Sort">
+        <div ng-controller="myctrl">
+            Row Limit:<input type="number" step=1 min=0 max=5 ng-model="rowLimit">
+            order By: <select ng-model="sortColumn">
+                        <option value="name">Name Asc</option>
+                        <option value="dateofbirth">D.O.B Asc</option>
+                        <option value="gender">Gender Asc</option>
+                        <option value="-salary">Salary Desc</option>
+                    </select>
+            <table border=2>
+                    <tr>
+                        <th>Names</th>
+                        <th>D.O.B</th>
+                        <th>Gender</th>
+                        <th>Salary (numbers)</th>
+                        <th>Salary (currency)</th>
+                    </tr>
+                    <tr ng-repeat="employee in employees |limitTo:rowLimit|orderBy:sortColumn">
+
+                        <td>{{employee.name | uppercase}}</td>
+                        <td>{{employee.dateofbirth | date:"dd/MM/yyyy"}}</td>
+                        <td>{{employee.gender| lowercase}}</td>
+                        <td>{{employee.salary | number:2}}</td>
+                        <td>{{employee.salary | currency}}</td>
+
+                    </tr>
+                </table>
+        
+        </div>
+        <script>
+            angular.module("Sort",[])
+            .controller("myctrl",function($scope){
+                $scope.employees=[
+                    {name:"Ben", dateofbirth: new Date("November 23 1988"), gender:"Male",salary:55000.788},
+                    {name:"Lisa", dateofbirth: new Date("March 10 1990"), gender:"Female",salary:75000},
+                    {name:"Stuart", dateofbirth: new Date("july 15 1975"), gender:"Male",salary:68000},
+                    {name:"Zack", dateofbirth: new Date("August 3 1985"), gender:"Male",salary:53000},
+                    {name:"Moira", dateofbirth: new Date("October 9 1991"), gender:"Female",salary:60000}
+                ];
+                $scope.rowLimit=3;
+                $scope.sortColumn="name";
+            });
+        </script>
+    </body>
+</html>
